@@ -21,7 +21,8 @@ namespace NPOI.SS.Util
 
     using NPOI.SS.UserModel;
     using System.Drawing;
-    using System.Windows.Forms;
+    using System.Runtime.InteropServices;
+    using System.Runtime.Versioning;
 
     /**
      * Helper methods for when working with Usermodel sheets
@@ -609,5 +610,206 @@ namespace NPOI.SS.Util
                 }
             }
         }
+    }
+
+    public struct _Size
+    {
+        public static readonly _Size Empty = new _Size();
+        public static readonly _Size DefaultFont = new _Size(12, 12); // default
+
+        public int Width { get; set; }
+        public int Height { get; set; }
+
+        public _Size(Point pt) : this(pt.X, pt.Y) { }
+
+        public _Size(int x, int y)
+        {
+            Width = x;
+            Height = y;
+        }
+    }
+
+    internal class TextRenderer
+    {
+        /// MeasureText wrappers.
+
+        partial class IntNativeMethods
+        {
+            [DllImport("User32.dll", SetLastError = true, CharSet = System.Runtime.InteropServices.CharSet.Unicode)]
+            [ResourceExposure(ResourceScope.None)]
+            public static extern int DrawTextExW(HandleRef hDC, string lpszString, int nCount,
+            ref IntNativeMethods.RECT lpRect, int nFormat, [In, Out] IntNativeMethods.DRAWTEXTPARAMS lpDTParams);
+
+            /// </devdoc>
+            [DllImport("Gdi32.dll", SetLastError = true, ExactSpelling = true, EntryPoint = "DeleteDC", CharSet = CharSet.Auto)]
+            [ResourceExposure(ResourceScope.None)]
+            public static extern bool IntDeleteDC(HandleRef hDC);
+            public static bool DeleteDC(HandleRef hDC)
+            {
+                // System.Internal.HandleCollector.Remove((IntPtr)hDC, IntSafeNativeMethods.CommonHandles.GDI);
+                bool retVal = IntDeleteDC(hDC);
+                return retVal;
+            }
+
+            [DllImport("Gdi32.dll", SetLastError = true, ExactSpelling = true, EntryPoint = "CreateCompatibleDC", CharSet = CharSet.Auto)]
+            [ResourceExposure(ResourceScope.Process)]
+            public static extern IntPtr IntCreateCompatibleDC(HandleRef hDC);
+
+            [ResourceExposure(ResourceScope.Process)]
+            [ResourceConsumption(ResourceScope.Process)]
+            public static IntPtr CreateCompatibleDC(HandleRef hDC)
+            {
+                // System.Internal.HandleCollector.Add(
+                IntPtr compatibleDc = IntCreateCompatibleDC(hDC); // , IntSafeNativeMethods.CommonHandles.GDI);
+                // DbgUtil.AssertWin32(compatibleDc != IntPtr.Zero, "CreateCompatibleDC([hdc=0x{0:X8}]) failed", hDC.Handle);
+                return compatibleDc;
+            }
+            
+            #region stru
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct RECT
+            {
+                public int left;
+                public int top;
+                public int right;
+                public int bottom;
+
+                public RECT(int left, int top, int right, int bottom)
+                {
+                    this.left = left;
+                    this.top = top;
+                    this.right = right;
+                    this.bottom = bottom;
+                }
+
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public class DRAWTEXTPARAMS
+            {
+                private int cbSize = Marshal.SizeOf(typeof(DRAWTEXTPARAMS));
+                public int iTabLength;
+                public int iLeftMargin;
+                public int iRightMargin;
+
+                /// <devdoc>
+                ///     Receives the number of characters processed by DrawTextEx, including white-space characters. 
+                ///     The number can be the length of the string or the index of the first line that falls below the drawing area. 
+                ///     Note that DrawTextEx always processes the entire string if the DT_NOCLIP formatting flag is specified. 
+                /// </devdoc>
+                public int uiLengthDrawn;
+
+                public DRAWTEXTPARAMS()
+                {
+                }
+                public DRAWTEXTPARAMS(DRAWTEXTPARAMS original)
+                {
+                    this.iLeftMargin = original.iLeftMargin;
+                    this.iRightMargin = original.iRightMargin;
+                    this.iTabLength = original.iTabLength;
+                }
+
+                public DRAWTEXTPARAMS(int leftMargin, int rightMargin)
+                {
+                    this.iLeftMargin = leftMargin;
+                    this.iRightMargin = rightMargin;
+                }
+            }
+
+            #endregion
+        }
+
+        public static _Size MeasureText(string text, Font font)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return _Size.Empty;
+            }
+
+            _Size result = _Size.DefaultFont;
+            using (WindowsGraphics grf = WindowsGraphics.CreateMeasurementWindowsGraphics())
+            {
+                // WindowsFont wf = WindowsGraphicsCacheManager.GetWindowsFont(font))
+                result = TextRenderer.MeasureText(grf.DeviceContext, text, font);
+
+                // WindowsGraphicsCacheManager.MeasurementGraphics.MeasureText(text, wf);
+                return result;
+            }
+        }
+
+        public static _Size MeasureText(_DeviceContext context, string text, Font font)
+        {
+            _Size result = _Size.Empty;
+
+            return result;
+        }
+
+        //class WindowsGraphicsCacheManager
+        //{
+        //    // From MSDN: Do not specify initial values for fields marked with ThreadStaticAttribute, because such initialization occurs only once, 
+        //    // when the class constructor executes, and therefore affects only one thread. 
+
+        //    // WindowsGraphics object used for measuring text based on the screen DC.  TLS to avoid synchronization issues.
+        //    // [ThreadStatic]
+        //    // private static WindowsGraphics measurementGraphics;
+        //}
+
+        internal enum DeviceContextType
+        {
+            Display = 0,
+            Memory = 1,
+        }
+
+        internal class _DeviceContext : IDisposable
+        {
+            public IntPtr hDC { get; set; }
+            internal DeviceContextType Type { get; set; }
+
+            public _DeviceContext(IntPtr compatibleDc, DeviceContextType type)
+            {
+                // System.Drawing.Internal.DeviceContext
+                hDC = compatibleDc;
+            }
+
+            public static _DeviceContext FromCompatibleDC(IntPtr hdc) //  = IntPtr.Zero)
+            {
+                IntPtr compatibleDc = IntNativeMethods.CreateCompatibleDC(new HandleRef(null, hdc));
+                return new _DeviceContext(compatibleDc, DeviceContextType.Memory);
+            }
+
+            public void Dispose()
+            {
+                IntNativeMethods.DeleteDC(new HandleRef(this, this.hDC));
+            }
+        }
+
+        public class WindowsGraphics : IDisposable
+        {
+            public bool disposeDc = false;
+            public _DeviceContext DeviceContext { get; set; }
+
+            public WindowsGraphics(_DeviceContext dc = null)
+            {
+                this.DeviceContext = dc ?? _DeviceContext.FromCompatibleDC(IntPtr.Zero); 
+            }
+
+            public static WindowsGraphics CreateMeasurementWindowsGraphics()
+            {
+                _DeviceContext dc = _DeviceContext.FromCompatibleDC(IntPtr.Zero);
+                WindowsGraphics wg = new WindowsGraphics(dc);
+                wg.disposeDc = true; // we create it, we dispose it.
+
+                return wg;
+            }
+
+            public void Dispose()
+            {
+                if (disposeDc && DeviceContext != null)
+                    DeviceContext.Dispose();
+                DeviceContext = null;
+            }
+        }
+
     }
 }

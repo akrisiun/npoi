@@ -39,7 +39,8 @@ namespace NPOI.HSSF.Record
         {
             recordData = in1.ReadRemainder();
         }
-        [Obsolete]
+
+        //  [Obsolete]
         public void ProcessContinueRecord(byte[] record)
         {
             //don't merge continue record with the drawing record, it must be Serialized Separately

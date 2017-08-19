@@ -128,6 +128,12 @@ namespace NPOI.HSSF.UserModel
                 _escherChildAnchor.Dy2 = (short)value;
             }
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)

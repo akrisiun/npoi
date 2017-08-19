@@ -5,11 +5,11 @@
     using NPOI.HSSF.UserModel;
     using NPOI.HSSF.Record;
 
-    [Obsolete]
+    // [Obsolete]
     public class ComboboxShape:AbstractShape
     {
         private EscherContainerRecord spContainer;
-        private ObjRecord objRecord;
+        private ObjRecord objRecord = null;
 
         /**
          * Creates the low evel records for a combobox.

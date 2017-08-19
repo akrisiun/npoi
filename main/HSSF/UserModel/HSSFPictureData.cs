@@ -93,12 +93,13 @@ namespace NPOI.HSSF.UserModel
         {
             switch (blip.RecordId)
             {
-                case EscherMetafileBlip.RECORD_ID_WMF:
-                    return "wmf";
-                case EscherMetafileBlip.RECORD_ID_EMF:
-                    return "emf";
-                case EscherMetafileBlip.RECORD_ID_PICT:
-                    return "pict";
+                //ZIP
+                //case EscherMetafileBlip.RECORD_ID_WMF:
+                //    return "wmf";
+                //case EscherMetafileBlip.RECORD_ID_EMF:
+                //    return "emf";
+                //case EscherMetafileBlip.RECORD_ID_PICT:
+                    //return "pict";
                 case EscherBitmapBlip.RECORD_ID_PNG:
                     return "png";
                 case EscherBitmapBlip.RECORD_ID_JPEG:
@@ -118,12 +119,13 @@ namespace NPOI.HSSF.UserModel
             {
                 switch (blip.RecordId)
                 {
-                    case EscherMetafileBlip.RECORD_ID_WMF:
-                        return "image/x-wmf";
-                    case EscherMetafileBlip.RECORD_ID_EMF:
-                        return "image/x-emf";
-                    case EscherMetafileBlip.RECORD_ID_PICT:
-                        return "image/x-pict";
+                    //ZIP
+                    //case EscherMetafileBlip.RECORD_ID_WMF:
+                    //    return "image/x-wmf";
+                    //case EscherMetafileBlip.RECORD_ID_EMF:
+                    //    return "image/x-emf";
+                    //case EscherMetafileBlip.RECORD_ID_PICT:
+                    //    return "image/x-pict";
                     case EscherBitmapBlip.RECORD_ID_PNG:
                         return "image/png";
                     case EscherBitmapBlip.RECORD_ID_JPEG:

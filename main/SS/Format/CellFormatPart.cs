@@ -24,7 +24,6 @@ namespace NPOI.SS.Format
     using System.Collections;
     using System.Text.RegularExpressions;
     using System.Text;
-    using System.Windows.Forms;
 
     /**
      * Objects of this class represent a single part of a cell format expression.
@@ -457,16 +456,16 @@ namespace NPOI.SS.Format
          *
          * @return <tt>true</tt> if the
          */
-        public CellFormatResult Apply(Label label, Object value)
-        {
-            CellFormatResult result = Apply(value);
-            label.Text = (/*setter*/result.Text);
-            if (result.TextColor != Color.Empty)
-            {
-                label.ForeColor = (/*setter*/result.TextColor);
-            }
-            return result;
-        }
+        //public CellFormatResult Apply(Label label, Object value)
+        //{
+        //    CellFormatResult result = Apply(value);
+        //    label.Text = (/*setter*/result.Text);
+        //    if (result.TextColor != Color.Empty)
+        //    {
+        //        label.ForeColor = (/*setter*/result.TextColor);
+        //    }
+        //    return result;
+        //}
         /**
          * Returns the CellFormatType object implied by the format specification for
          * the format part.

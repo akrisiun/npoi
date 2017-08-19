@@ -40,9 +40,9 @@ namespace NPOI.Util
         * @deprecated Deprecated since logical value is offset from stored
         * value and correction factor is applied in accessor method.
         */
-#if !HIDE_UNREACHABLE_CODE
-        [Obsolete]
-#endif
+//#if !HIDE_UNREACHABLE_CODE
+//        [Obsolete]
+//#endif
         private int bitCount;
 
         /**
@@ -54,9 +54,10 @@ namespace NPOI.Util
          * @deprecated Deprecated since logical value is offset from stored
          * value and correction factor is applied in accessor method.
          */
-#if !HIDE_UNREACHABLE_CODE
-        [Obsolete]
-#endif
+
+//      #if !HIDE_UNREACHABLE_CODE
+//        [Obsolete]
+//#endif
         private int bitLength;
 
         // /**
@@ -79,9 +80,9 @@ namespace NPOI.Util
          * @deprecated Deprecated since logical value is offset from stored
          * value and correction factor is applied in accessor method.
          */
-#if !HIDE_UNREACHABLE_CODE
-        [Obsolete]
-#endif
+//#if !HIDE_UNREACHABLE_CODE
+//        [Obsolete]
+//#endif
         private int firstNonzeroIntNum;
 
         /**

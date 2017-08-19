@@ -1632,7 +1632,7 @@ namespace NPOI.HSSF.UserModel
                     return _sheet.PageSettings.PrintSetup.HeaderMargin;
                 default:
                     return _sheet.PageSettings.GetMargin(margin);
-                    break;
+                    // break;
             }
         }
 

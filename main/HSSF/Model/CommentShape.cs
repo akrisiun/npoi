@@ -29,7 +29,7 @@ namespace NPOI.HSSF.Model
     /// to low-level records.
     /// @author Yegor Kozlov
     /// </summary>
-    [Obsolete]
+    // [Obsolete]
     public class CommentShape : TextboxShape
     {
 

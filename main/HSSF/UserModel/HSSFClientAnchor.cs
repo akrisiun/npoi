@@ -340,5 +340,11 @@ namespace NPOI.HSSF.UserModel
                 _escherClientAnchor.Dy2 = (short)value;
             }
         }
+
+        public override int GetHashCode()
+        {
+            // no compile warning...
+            return base.GetHashCode();
+        }
     }
 }

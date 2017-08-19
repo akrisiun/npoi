@@ -324,6 +324,7 @@ namespace NPOI.SS.Formula.Functions
                 int testValue;
                 if (x is StringEval)
                 {
+
 #if !HIDE_UNREACHABLE_CODE
                     if (true)
                     { // change to false to observe more intuitive behaviour
@@ -331,14 +332,15 @@ namespace NPOI.SS.Formula.Functions
                         // boolean values when the target(x) is a string
                         return false;
                     }
-                    StringEval se = (StringEval)x;
-                    Boolean? val = ParseBoolean(se.StringValue);
-                    if (val == null)
-                    {
-                        // x is text that is not a boolean
-                        return false;
-                    }
-                    testValue = BoolToInt(val.Value);
+
+                    //StringEval se = (StringEval)x;
+                    //Boolean? val = ParseBoolean(se.StringValue);
+                    //if (val == null)
+                    //{
+                    //    // x is text that is not a boolean
+                    //    return false;
+                    //}
+                    //testValue = BoolToInt(val.Value);
 #else
                     return false;
 #endif

@@ -81,12 +81,13 @@ namespace NPOI.DDF
                 {
                     r = new EscherBitmapBlip();
                 }
-                else if (recordId == EscherMetafileBlip.RECORD_ID_EMF ||
-                        recordId == EscherMetafileBlip.RECORD_ID_WMF ||
-                        recordId == EscherMetafileBlip.RECORD_ID_PICT)
-                {
-                    r = new EscherMetafileBlip();
-                }
+                //ZIP
+                //else if (recordId == EscherMetafileBlip.RECORD_ID_EMF ||
+                //        recordId == EscherMetafileBlip.RECORD_ID_WMF ||
+                //        recordId == EscherMetafileBlip.RECORD_ID_PICT)
+                //{
+                //    r = new EscherMetafileBlip();
+                //}
                 else
                 {
                     r = new EscherBlipRecord();

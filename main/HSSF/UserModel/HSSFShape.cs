@@ -63,11 +63,11 @@ namespace NPOI.HSSF.UserModel
         private EscherContainerRecord _escherContainer;
         private ObjRecord _objRecord;
         private EscherOptRecord _optRecord;
-        int lineStyleColor = 0x08000040;
-        int fillColor = 0x08000009;
-        int lineWidth = LINEWIDTH_DEFAULT;
-        LineStyle lineStyle = LineStyle.Solid;
-        bool noFill = false;
+        //int lineWidth = LINEWIDTH_DEFAULT;
+        //int lineStyleColor = 0x08000040;
+        //int fillColor = 0x08000009;
+        //LineStyle lineStyle = LineStyle.Solid;
+        // bool noFill = false;
 
         /**
          * creates shapes from existing file
@@ -400,7 +400,7 @@ namespace NPOI.HSSF.UserModel
                         LittleEndian.PutInt(property.PropertyValue, bos);
                         return LittleEndian.GetShort(bos.ToArray(), 2);
                     }
-                    catch (IOException e)
+                    catch (IOException)
                     {
                         //e.printStackTrace();
                         return 0;

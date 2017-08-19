@@ -25,7 +25,7 @@ namespace NPOI.HSSF.Record.Chart
     using NPOI.Util;
 
 
-    public enum AxisLineType
+    public enum _AxisLineType
     {
         /// <summary>
         /// The axis (section 2.2.3.6) line itself.

@@ -25,7 +25,7 @@ namespace NPOI.HSSF.Model
     using NPOI.DDF;
     using NPOI.Util;
 
-    [Obsolete]
+    // [Obsolete]
     public class PolygonShape: AbstractShape
     {
         public const short OBJECT_TYPE_MICROSOFT_OFFICE_DRAWING = 30;

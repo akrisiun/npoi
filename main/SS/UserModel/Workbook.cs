@@ -165,7 +165,7 @@ namespace NPOI.SS.UserModel
         /// foreach(ISheet sheet in workbook) ...
         /// </summary>
         /// <returns>Enumeration of all the sheets of this workbook</returns>
-        IEnumerator GetEnumerator();
+        //  new IEnumerator GetEnumerator();
 
         /// <summary>
         /// Removes sheet at the given index

@@ -142,12 +142,12 @@ namespace NPOI.POIFS.Crypt
         {
             try
             {
-                string name = null;
                 string chain = null;
-                if (algorithm == EncryptionHeader.ALGORITHM_AES_128 ||
-                    algorithm == EncryptionHeader.ALGORITHM_AES_192 ||
-                    algorithm == EncryptionHeader.ALGORITHM_AES_256)
-                    name = "AES";
+                //string name = null;
+                //if (algorithm == EncryptionHeader.ALGORITHM_AES_128 ||
+                //    algorithm == EncryptionHeader.ALGORITHM_AES_192 ||
+                //    algorithm == EncryptionHeader.ALGORITHM_AES_256)
+                //    name = "AES";
 
                 if (mode == EncryptionHeader.MODE_CBC)
                     chain = "CBC";
@@ -160,7 +160,7 @@ namespace NPOI.POIFS.Crypt
                 cipher.IV = vec;
                 cipher.Padding = PaddingMode.None;
                 cipher.Mode = chain == "CBC" ? CipherMode.CBC : CipherMode.CFB;
-               // cipher.Key = ;
+                // cipher.Key = ;
                 //cipher.IV = 
                 return cipher;
             }
