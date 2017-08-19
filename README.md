@@ -1,3 +1,5 @@
+[![NPOI in myget.org](https://www.myget.org/BuildSource/Badge/andriusk?identifier=44cf0235-aaaf-4884-8e4e-26afaa26c00d)](NPOI in myget.org/)
+
 NPOI
 ====
 

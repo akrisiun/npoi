@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net40;net462</TargetFrameworks>
     <RuntimeIdentifiers>win;win-x86;win-x64</RuntimeIdentifiers>
-    <Version>2.2.0</Version>
+    <Version>2.3.1</Version>
     <ProductVersion>9.1.1</ProductVersion>
     <OutputType>Library</OutputType>
     <RootNamespace>NPOI</RootNamespace>
